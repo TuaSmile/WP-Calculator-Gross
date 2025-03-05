@@ -4,9 +4,6 @@
  * Plugin URI: https://github.com/s-andrzejewski/wp-net-gross-calculator
  * Description: A plugin that calculates gross and tax amounts and saving data to CPT.
  * Version: 1.0.0
- * Author: Szymon Andrzejewski
- * Author URI: https://www.linkedin.com/in/szymon-andrzejewski-kepno/?locale=en_US
- * Text Domain: net-gross-calc
  * Domain path: /languages
  * Requires at least: 5.8
  * Requires PHP: 7.4
