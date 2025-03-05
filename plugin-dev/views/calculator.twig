@@ -1,0 +1,129 @@
+{# TODO: #}
+{#
+* define `wp_nonce_field` in PHP
+* define `vat_rate` in PHP
+* strings handling with ACF
+#}
+
+{% block calculator %}
+<div class="ngc-calculator">
+    <form class="ngc-calculator__form" method="post">
+
+        <div class="pb-3">
+            <h2 class="ngc-calculator__title   text-base font-semibold leading-7 text-gray-900">
+                {{ 'VAT calculator for products' | translate}}
+            </h2>
+            <p class="mt-1 text-sm leading-6 text-gray-600">
+                {{ 'Calculate the gross price and VAT amount for your product. Enter the name, net amount and select the VAT rate to get the result.<br>The form saves the data automatically.' | translate }}
+            </p>
+
+            <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+                <div class="sm:col-span-6">
+                    <label for="product-name" class="block text-sm font-medium leading-6 text-gray-900">
+                        {{ 'Product name' | translate }}
+                    </label>
+                    <div class="mt-2">
+                        <input
+                            required
+                            type="text"
+                            id="product-name"
+                            name="product-name"
+                            value="{{ product_name }}"
+                            class="ngc-calculator__input   block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        >
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+                <div class="sm:col-span-4">
+                    <label for="net-amount" class="ngc-calculator__label   block text-sm font-medium leading-6 text-gray-900">
+                        {{ 'Net price' | translate }}
+                    </label>
+                    <div class="mt-2">
+                        <input
+                            required
+                            type="number"
+                            name="net-amount"
+                            id="net-amount"
+                            min="0"
+                            step="1"
+                            value="{{ net_amount }}"
+                            class="ngc-calculator__input   block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        >
+                    </div>
+                </div>
+
+                <div class="sm:col-span-1">
+                    <label for="currency" class="ngc-calculator__label   block text-sm font-medium leading-6 text-gray-900">
+                        {{ 'Currency' | translate }}
+                    </label>
+                    <div class="mt-2">
+                        <select
+                            id="currency"
+                            name="currency"
+                            class="ngc-calculator__select   block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                            {% if available_currencies|length < 2 %}
+                            disabled
+                            {% endif %}
+                        >
+                            {% for currency in available_currencies %}
+                                <option>{{ currency }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+
+                <div class="sm:col-span-1">
+                    <label for="country" class="block text-sm font-medium leading-6 text-gray-900">
+                        {{ 'VAT Rate' | translate }}
+                    </label>
+                    <div class="mt-2">
+                        <select
+                            required
+                            id="vat-rate"
+                            name="vat-rate"
+                            {# class="ngc-calculator__select" #}
+                            class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                        >
+                            {% for vat_rate in available_vat_rates %}
+                                <option class="ngc-calculator__option" value="{{ vat_rate.value }}">
+                                    {{ vat_rate.label }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {#
+            ! Prevent purge ignore:
+            * Generated with JS
+            <div class="ngc-calculator__result">
+                <p class="ngc-calculator__result-text">
+                    Cena brutto produktu "{{ product_name }}", wynosi: {{ gross_amount }} PLN, z czego podatek VAT to: {{ tax_amount }} PLN.
+                </p>
+            </div>
+        #}
+
+        <div class="mt-2 flex items-center justify-center gap-x-6">
+            <button 
+                type="button"
+                name="calculate"
+                class="ngc-calculator__button   rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+            >
+                {{ 'Calculate' | translate }}
+            </button>
+        </div>
+
+        {#
+            ! Prevent purge ignore:
+            * Generated with JS
+            <div class="ngc-calculator__error-messages mt-2">
+                <p class="text-red-500">Text</p>
+            </div>
+        #}
+    </form>
+</div>
+{% endblock %}

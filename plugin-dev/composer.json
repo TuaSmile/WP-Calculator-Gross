@@ -1,0 +1,19 @@
+{
+    "name": "s-andrzejewski/wp-net-gross-calculator",
+    "description": "A WordPress plugin that calculates gross and tax amounts.",
+    "author": "Szymon Andrzejewski",
+    "type": "wordpress-plugin",
+    "require": {
+        "timber/timber": "^2.0"
+    },
+    "autoload": {
+      "psr-4": {
+          "NetGrossCalc\\": "src"
+      }
+    },
+    "config": {
+        "allow-plugins": {
+            "composer/installers": true
+        }
+    }
+}
